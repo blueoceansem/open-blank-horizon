@@ -1,19 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Página em branco" },
-      { name: "description", content: "Uma página em branco." },
-      { property: "og:title", content: "Página em branco" },
-      { property: "og:description", content: "Uma página em branco." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
-  component: Index,
-});
+import landingPage from "@/content/nettone.html?raw";
 
-function Index() {
-  return <div className="min-h-screen bg-background" />;
-}
+export const Route = createFileRoute("/")({
+  server: {
+    handlers: {
+      GET: () =>
+        new Response(landingPage, {
+          headers: { "Content-Type": "text/html; charset=utf-8" },
+        }),
+    },
+  },
+});
